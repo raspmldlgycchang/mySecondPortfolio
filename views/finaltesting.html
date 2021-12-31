@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face{
+            font-family:"MapoBackpacking";
+            src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoBackpackingA.woff") format("woff");
+            font-weight:normal;
+            font-style:normal;
+            font-display: swap;
+        }
+
+        :root{
+            --bg-color:#fff;
+            --bg-transparent:rgba(255,255,255,0);
+            --border-color:#2035a7;
+        }
+        
+        .note{
+            font-family:"MapoBackpacking", serif;
+            font-size:16px;
+            line-height: 32px;
+            border:2px solid var(--border-color);
+            border-bottom:1px solid var(--border-color);
+            background:linear-gradient(
+                to bottom,
+                var(--border-color) 0%,
+                var(--border-color) 1px,
+                var(--bg-transparent) 1px,
+                var(--bg-transparent) 100%
+            );
+            background-size: 24px 32px;
+            background-position:0 -1px;
+        }
+
+        .note > p{
+            margin:0;
+            padding:0 4px;
+            display: flex;
+        }
+
+        .note div{
+            margin:0;
+            padding:0 4px;
+        }
+
+        .note > img{
+            display: block;
+            width: auto;
+            max-width:100%;
+            margin: 0 auto;
+            object-fit: cover;
+        }
+
+        .not > *:not(:last-child){
+            margin-bottom: 32px;
+        }
+
+        body{
+            margin:0;
+            padding:10px;
+            justify-content: center;
+            align-items: center;
+            font-family:"MapoBackpacking", serif;
+            background:rgba(112, 68, 201, 0.842);
+        }
+
+        .note{
+            max-width:fit-content;
+            background:rgb(26, 126, 192);
+        }
+
+        .menu::before{
+            font-family:"MapoBackpacking", serif;
+            font-size:1.5em;
+            float:left;
+            clear:left;
+        }
+
+        .menu > input[id="expand-menu1"]+label:before{
+            content: '\1F34E 1일1프로젝트';
+        }
+
+        .menu > input[id="expand-menu2"]+label:before{
+            content: '\1F34F 학교프로젝트';
+        }
+
+        .menu > input[id="expand-menu2"]+label:after{
+            content:' 사과 글자 두 개 중에 꼭 하나를 먼저 클릭하고 달라지는 탭을 클릭해주세요';
+            color:#f4c2f0;
+        }
+        
+        input[type="radio"]{
+            display: none;
+        }
+
+        input[id*="expand-menu"]:checked+label:before{
+            border-bottom: 3px solid #b4e7f8;
+            box-shadow: inset 0 -4px 0 #b4e7f8;
+        }
+
+        input[id*="slide"]+label{
+            display:inline-block;
+            padding:20px;
+            background:#ccc;
+            color:#999;
+            font-size:14px;
+            cursor:pointer;
+        }
+
+        input[id*="slide"]:checked+label{
+            background:#aaa;
+            color:#000;
+        }
+
+        .conbox{
+            width: 1500px;
+            height:500px;
+            background:#aaa;
+            margin:0 auto;
+            display: none;
+        }
+
+        input[id="expand-menu1"]:checked ~ .tab_content {display:block;}
+        input[id="expand-menu1"]:checked ~ .school_content {display:none;}
+        input[id="expand-menu2"]:checked ~ .school_content {display:block;}
+        input[id="expand-menu2"]:checked ~ .tab_content {display:none;}
+
+        .tab_content>input[id="tab01"] ~ p.exp+p.showhidden{
+            display: none;
+        }
+        .tab_content>input[id="tab01"]:checked ~ p.exp+p.showhidden{
+            display: block;
+        }
+        .tab_content>input[id="tab01"]:checked ~ p.exp {
+            display: none;
+        }
+
+        .tab_content>input[id="tab02"] ~ p.exp+p.showhidden{
+            display: none;
+        }
+        .tab_content>input[id="tab02"]:checked ~ p.exp+p.showhidden{
+            display: block;
+        }
+        .tab_content>input[id="tab02"]:checked ~ p.exp {
+            display: none;
+        }
+        .tab_content>input[id="tab03"] ~ p.exp+p.showhidden{
+            display: none;
+        }
+        .tab_content>input[id="tab03"]:checked ~ p.exp+p.showhidden{
+            display: block;
+        }
+        .tab_content>input[id="tab03"]:checked ~ p.exp {
+            display: none;
+        }
+        input[id="tab01"]:checked ~.con1{
+            display: block;
+        }
+        input[id="tab02"]:checked ~ .con2{
+            display: block;
+        }
+        input[id="tab03"]:checked ~ .con3{
+            display: block;
+        }
+        input[id="tab04"]:checked ~.con4{
+            display: block;
+        }
+        input[id="tab05"]:checked ~ .con5{
+            display: block;
+        }
+        input[id="tab06"]:checked ~ .con6{
+            display: block;
+        }
+        input[id="tab07"]:checked ~.con7{
+            display: block;
+        }
+        input[id="tab08"]:checked ~ .con8{
+            display: block;
+        }
+
+        .section input[id="slide"]{
+            display: none;
+        }
+        .section .slidewrap{
+            max-width: 1200px;
+            margin:0 auto;
+            overflow:hidden;
+
+        }
+        .section .slidelist{
+            white-space: nowrap;
+            font-size:0;
+        }
+        .section .slidelist > li{
+            display: inline-block;
+            vertical-align: middle;
+            width:100%;
+            transition:all .5s;
+        }
+        .section .slidelist > li >a{
+            display:block;
+            position:relative;
+        }
+        .section .slidelist > li >a img{
+            width:100%;
+        }
+        .section .slidelist label{
+            position:absolute;
+            z-index: 10;
+            top:50%;
+            transform:translateY(-50%);
+            padding:50px;
+            cursor:pointer;
+        }
+        .section .slidelist .left{
+            left:30px;
+            background:url('../public/img/java/left1.png') center center / 100% no-repeat; 
+        }
+        .section .slidelist .right{
+            right:30px;
+            background:url('../public/img/java/right1.png') center center/ 100% no-repeat;
+        }
+        .section [id="slide01"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(0%);
+        }
+        .section [id="slide02"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-100%);
+        }
+        .section [id="slide03"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-200%);
+        }
+        .section [id="slide04"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-300%);
+        }
+        .section [id="slide05"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-400%);
+        }
+        .section [id="slide06"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-500%);
+        }
+        .section [id="slide07"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-600%);
+        }
+        .section [id="slide08"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-700%);
+        }
+        .section [id="slide09"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-800%);
+        }
+        .section [id="slide10"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-900%);
+        }
+        .section [id="slide11"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(0%);
+        }
+        .section [id="slide12"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-100%);
+        }
+        .section [id="slide13"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-200%);
+        }
+        .section [id="slide14"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-300%);
+        }
+        .section [id="slide15"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-400%);
+        }
+        .section [id="slide16"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-500%);
+        }
+        .section [id="slide17"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-600%);
+        }
+        .section [id="slide18"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-700%);
+        }
+        .section [id="slide19"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-800%);
+        }
+        .section [id="slide20"]:checked ~ .slidewrap .slidelist > li {
+            transform:translateX(-900%);
+        }
+        .section .slide-control [class*="control"]{
+            display: none;
+        }
+        .section [id="slide01"]:checked ~ .slidewrap .control01{
+            display: block;
+        }
+        .section [id="slide02"]:checked ~ .slidewrap .control02{
+            display: block;
+        }
+        .section [id="slide03"]:checked ~ .slidewrap .control03{
+            display:block;
+        }
+        .section [id="slide04"]:checked ~ .slidewrap .control04{
+            display: block;
+        }
+        .section [id="slide05"]:checked ~ .slidewrap .control05{
+            display: block;
+        }
+        .section [id="slide06"]:checked ~ .slidewrap .control06{
+            display:block;
+        }
+        .section [id="slide07"]:checked ~ .slidewrap .control07{
+            display: block;
+        }
+        .section [id="slide08"]:checked ~ .slidewrap .control08{
+            display: block;
+        }
+        .section [id="slide09"]:checked ~ .slidewrap .control09{
+            display:block;
+        }
+        .section [id="slide10"]:checked ~ .slidewrap .control10{
+            display:block;
+        }
+        .section [id="slide11"]:checked ~ .slidewrap .control11{
+            display: block;
+        }
+        .section [id="slide12"]:checked ~ .slidewrap .control12{
+            display: block;
+        }
+        .section [id="slide13"]:checked ~ .slidewrap .control13{
+            display:block;
+        }
+        .section [id="slide14"]:checked ~ .slidewrap .control14{
+            display: block;
+        }
+        .section [id="slide15"]:checked ~ .slidewrap .control15{
+            display: block;
+        }
+        .section [id="slide16"]:checked ~ .slidewrap .control16{
+            display:block;
+        }
+        .section [id="slide17"]:checked ~ .slidewrap .control17{
+            display: block;
+        }
+        .section [id="slide18"]:checked ~ .slidewrap .control18{
+            display: block;
+        }
+        .section [id="slide19"]:checked ~ .slidewrap .control19{
+            display:block;
+        }
+        .section [id="slide20"]:checked ~ .slidewrap .control20{
+            display:block;
+        }
+        .links-explain{
+            position:relative;
+            padding-left: 35px;
+            background:url('../public/img/file.png') -30px 0 / 60px no-repeat;
+            line-height:30px;
+            color:#000;
+        }
+        .links-explain::after{
+            content:'';
+            position:absolute;
+            z-index:1;
+            top:0;left:0;
+            width:0;
+            height:100%;
+            background:url('../public/img/file.png') 0 0 / 60px no-repeat;
+            transition:all .5s;
+        }
+        .links-explain:hover::after{
+            width:30px;
+        }
+        .conbox.con5>a>img{
+            width:30px;
+            height:30px;
+            padding:0;
+            border:2px solid #ccc;
+            border-radius:100%;
+
+        }
+        .section input[id="slide21"] ~ .slidewrap .slidelist > li >a>label+p.text{
+            text-align: center;
+            font-size: 15px;
+            font-weight: 100;
+        }
+        .section input[id="slide21"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(0%);
+        }
+        .section input[id="slide22"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(-100%);
+        }
+        .section input[id="slide23"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(-200%);
+        }
+        #testbox input+h2{
+            margin-left:15px;
+            font-size:15px;
+            left:15px;
+        }
+        a{
+            text-decoration: none;
+            color:#5f5f5f;
+        }
+        h3{
+            color:#595959;
+        }
+        .conbox.con4>#testbox>#subtestbox>span.text>a>img{
+            position:relative;
+            width:17px;
+            height:17px;
+            border:1px solid #c8ccd4;
+            border-radius: 3px;
+            transition:background 0.1s ease;
+        }
+        @keyframes jelly{
+            from {transform:scale(1,1);}
+            30%{
+                transform:scale(1.25, 0.75);
+            }
+            40%{
+                transform:scale(0.75, 1.25);
+            }
+            50%{
+                transform:scale(1.15, 0.85);
+            }
+            65%{
+                transform:scale(0.95, 1.05);
+            }
+            75%{
+                transform:scale(1.05, 0.95);
+            }
+            to{
+                transform:scale(1, 1);
+            }
+        }
+        input[type="checkbox"]{
+            display: none;
+            position:absolute;
+            opacity:0;
+            cursor:pointer;
+            height:0;
+            width:0;
+        }
+        input[type="checkbox"]:checked+label span.text{
+            margin-left:5px;
+        }
+        input[type="checkbox"]:checked+label span.icon{
+            border-color: transparent;
+            background:#ff1616;
+            animation:jelly 0.6s ease;
+        }
+        input[type="checkbox"]:checked+label span.icon::after{
+            opacity: 1;
+            transform:rotate(45deg) scale(1);
+        }
+        input[id*="category"]+label>h3+em+span.arrowicon{
+            position:relative;
+            width:17px;
+            height:17px;
+            border:1px solid transparent;
+            border-radius: 3px;
+            transition:background 0.1s ease;
+        }
+        input[id*="category"]+label>h3+em+span.arrowicon::after{
+            content:'';
+            position:absolute;
+            top:-40px;
+            left:70px;
+            width:5px;
+            height:11px;
+            border-right:2px solid #fff;
+            border-bottom:2px solid #fff;
+            transform:rotate(45deg) scale(0);
+            transition:all 0.3s ease;
+            transition:delay 0.15s;
+            opacity: 0;
+        }
+        input[id*="category"]:checked+label>h3+em+span.arrowicon{
+            border-color:transparent;
+            animation:jelly 0.6s ease;
+        }
+        input[id*="category"]:checked+label>h3>a>span{
+            display: none;
+        }
+        input[id*="category"]:checked+label>h3+em+span.arrowicon::after{
+            opacity: 1;
+            transform:rotate(45deg) scale(1);
+        }
+        #testbox span{
+            display: inline-block;
+            vertical-align: middle;
+            cursor:pointer;
+        }
+        #testbox input{
+            position:absolute;
+            opacity: 0;
+            cursor:pointer;
+            height:0;
+            width:0;
+        }
+        #testbox input+h2{
+            position: relative;
+            margin-left:15px;
+            font-size:15px;
+            left:15px;
+        }
+        #testbox input+h2+.icon{
+            position:absolute;
+            top:40%;
+            right:100px;
+            width:30px;
+            height:30px;
+            display: inline-block;
+            background:url('') 0 0 no-repeat;
+        }
+        #testbox input:checked+h2+.icon{
+            background-position: -38px 0;
+        }
+        #testbox .icon{
+            position:relative;
+            width:17px;
+            height:17px;
+            border:1px solid #c8ccd4;
+            border-radius: 3px;
+            transition:background 0.1s ease;
+        }
+        #testbox input+h2+span ~.icon::after{
+            content:'';
+            position:absolute;
+            top:1px;
+            left:5px;
+            width:5px;
+            height:11px;
+            border-right:2px solid #fff;
+            border-bottom:2px solid #fff;
+            transform: rotate(45deg) scale(0);
+            transition:all .3s ease;
+            transition-delay: 0.15s;
+            opacity: 0;
+        }
+        #testbox input+h2+span+.icon+.text{
+            margin-left: 5px;
+        }
+        #testbox input+h2 ~ label>.icon+.text{
+            margin-left:5px;
+        }
+        #testbox input:checked+h2{
+            color: #c2f4db;
+        }
+        #textbox input:checked+h2+label>.icon+.text{
+            color:#c2f4db;
+        }
+        
+        #testbox input:checked+h2~label>span:nth-child(2)> a:hover{
+            color:#f4c2f0;
+        }
+        #testbox input:checked+h2~label>span.icon{
+            border-color: transparent;
+            background:#ff1616;
+            animation:jelly 0.6s ease;
+        }
+        #testbox input:checked+h2 ~ label>.icon::after{
+            opacity:1;
+            transform: rotate(45deg) scale(1);
+        }
+        #testbox:hover::after{
+            width:30px;
+        }
+        #testbox span{
+            display: inline-block;
+            vertical-align: middle;
+            cursor:pointer;
+        }
+        #testbox input{
+            position:absolute;
+            opacity: 0;
+            cursor:pointer;
+            height:0;
+            width:0;
+        }
+        #testbox input+h2{
+            position: relative;
+
+        }
+        #testbox input+h2+.icon{
+            position:absolute;
+            top:40%;
+            right:100px;
+            width:30px;
+            height:30px;
+            display: inline-block;
+            background:url('') 0 0 no-repeat;
+        }
+        #testbox input:checked+h2+.icon{
+            background-position: -38px 0;
+        }
+        #testbox .icon{
+            position:relative;
+            width:17px;
+            height:17px;
+            border:1px solid #c8ccd4;
+            border-radius: 3px;
+            transition:background 0.1s ease;
+        }
+        #testbox input+h2+span ~.icon::after{
+            content:'';
+            position:absolute;
+            top:1px;
+            left:5px;
+            width:5px;
+            height:11px;
+            border-right:2px solid #fff;
+            border-bottom:2px solid #fff;
+            transform: rotate(45deg) scale(0);
+            transition:all .3s ease;
+            transition-delay: 0.15s;
+            opacity: 0;
+        }
+        #testbox input+h2+span+.icon+.text{
+            margin-left: 5px;
+        }
+        #testbox input+h2 ~ label>.icon+.text{
+            margin-left:5px;
+        }
+        #testbox input:checked+h2{
+            color: #c2f4db;
+        }
+        #textbox input:checked+h2+label>.icon+.text{
+            color:#c2f4db;
+        }
+        
+        #testbox input:checked+h2~label>span:nth-child(2)> a:hover{
+            color:#f4c2f0;
+        }
+        #testbox input:checked+h2~label>span.icon{
+            border-color: transparent;
+            background:#ff1616;
+            animation:jelly 0.6s ease;
+        }
+        #testbox input:checked+h2 ~ label>.icon::after{
+            opacity:1;
+            transform: rotate(45deg) scale(1);
+        }
+        #testbox:hover::after{
+            width:30px;
+        }
+        .conbox.con8 > p.text{
+            text-align: center;
+            font-size: 15px;
+            font-weight: 100;
+        }
+        .conbox.con8 > p ~ div{
+            text-align: center;
+        }
+
+
+        .school_content>input[id="tab10"] ~ p.exp + p.showhidden{
+            display: none;
+        }
+        .school_content>input[id="tab10"]:checked ~ p.exp + p.showhidden{
+            display: block;
+        }
+        .school_content>input[id="tab10"]:checked ~ p.exp{
+            display: none;
+        }
+
+        .conbox.con10 > .section > .slidewrap > .slidelist > li > a > label+p.text{
+            text-align: center;
+            font-size: 15px;
+            font-weight: 100;
+        }
+        input[id="tab10"]:checked ~ .con10{
+            display:block;
+        }
+        input[id="tab11"]:checked ~ .con11{
+            display:block;
+        }
+        input[id="tab12"]:checked ~ .con12{
+            display:block;
+        }
+        input[id="tab13"]:checked ~ .con13{
+            display:block;
+        }
+        input[id="tab14"]:checked ~ .con14{
+            display:block;
+        }
+        input[id="tab15"]:checked ~ .con15{
+            display:block;
+        }
+        input[id="tab16"]:checked ~ .con16{
+            display:block;
+        }
+        input[id="tab17"]:checked ~ .con17{
+            display:block;
+        }
+        .section .slidelist > li > a video{
+            width:100%;
+        }
+        .section [id="slide25"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(0%);
+        }
+        .section [id="slide26"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(-100%);
+        }
+        .section [id="slide27"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(-200%);
+        }
+        .section [id="slide28"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(-300%);
+        }
+        .section [id="slide29"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(-400%);
+        }
+        .section [id="slide30"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(-500%);
+        }
+        .section [id="slide31"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(-600%);
+        }
+        .section [id="slide32"]:checked ~ .slidewrap .slidelist > li{
+            transform:translateX(-700%);
+        }
+
+        .section [id="slide25"]:checked ~ .slidewrap .control25{
+            display:block;
+        }
+        .section [id="slide26"]:checked ~ .slidewrap .control26{
+            display:block;
+        }
+        .section [id="slide27"]:checked ~ .slidewrap .control27{
+            display:block;
+        }
+        .section [id="slide28"]:checked ~ .slidewrap .control28{
+            display:block;
+        }
+        .section [id="slide29"]:checked ~ .slidewrap .control29{
+            display:block;
+        }
+        .section [id="slide30"]:checked ~ .slidewrap .control30{
+            display:block;
+        }
+        .section [id="slide31"]:checked ~ .slidewrap .control31{
+            display:block;
+        }
+        .section [id="slide32"]:checked ~ .slidewrap .control32{
+            display:block;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="note">
+        <p>GYCCHANG의 프로젝트 기록</p>
+        
+    </div>
+    <div class="menu">
+        <input type="radio" id="expand-menu1" name="expand-menu">
+        <label for="expand-menu1" ></label>
+        
+        <input type="radio" id="expand-menu2" name="expand-menu">
+        <label for="expand-menu2"></label>
+        <div class="tab_content">
+            <input type="radio" name="tabmenu" id="tab01">
+            <label for="tab01">JAVA</label>
+            <input type="radio" name="tabmenu" id="tab02">
+            <label for="tab02">웹크롤링</label>
+            <input type="radio" name="tabmenu" id="tab03">
+            <label for="tab03">MongoDB활용플젝</label>
+            <input type="radio" name="tabmenu" id="tab04">
+            <label for="tab04">문자열처리</label>
+            <input type="radio" name="tabmenu" id="tab05">
+            <label for="tab05">2차원구조체포인터배열</label>
+            <input type="radio" name="tabmenu" id="tab06">
+            <label for="tab06">C</label>
+            <input type="radio" name="tabmenu" id="tab07">
+            <label for="tab07">CUDA</label>
+            <input type="radio" name="tabmenu" id="tab08">
+            <label for="tab08">StartBootstrap</label>
+            <p class="exp">탭메뉴를 하나씩 눌러주세요</p>
+            <p class="showhidden">화살표를 클릭해주세요</p>
+            <div class="conbox con1">
+
+                <div class="section">
+                    <input type="radio" name="slide" id="slide01" checked>
+                    <input type="radio" name="slide" id="slide02">
+                    <input type="radio" name="slide" id="slide03">
+                    <input type="radio" name="slide" id="slide04">
+                    <input type="radio" name="slide" id="slide05">
+                    <input type="radio" name="slide" id="slide06">
+                    <input type="radio" name="slide" id="slide07">
+                    <input type="radio" name="slide" id="slide08">
+                    <input type="radio" name="slide" id="slide09">
+                    <input type="radio" name="slide" id="slide10">
+
+                    <div class="slidewrap">
+                        <ul class="slidelist">
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/MyRollModelBeep.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/IAMSORRYHWANGSUWON_part01.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/MyRollModelBeep_part01.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/MyRollModelBeep_part02.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/PrintStreamEx1.PNG">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/PrintStreamEx1_java.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/swapmyname.PNG">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/swapmyname_java.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/ToisyongExample1_java.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/java/ToisyongExample1_java_part01.png">
+                                </a>
+                            </li>
+                            <div class="slide-control">
+                                <div class="control01">
+                                    <label for="slide10" class="left"></label>
+                                    <label for="slide02" class="right"></label>
+                                </div>
+                                <div class="control02">
+                                    <label for="slide01" class="left"></label>
+                                    <label for="slide03" class="right"></label>
+                                </div>
+                                <div class="control03">
+                                    <label for="slide02" class="left"></label>
+                                    <label for="slide04" class="right"></label>
+                                </div>
+                                <div class="control04">
+                                    <label for="slide03" class="left"></label>
+                                    <label for="slide05" class="right"></label>
+                                </div>
+                                <div class="control05">
+                                    <label for="slide04" class="left"></label>
+                                    <label for="slide06" class="right"></label>
+                                </div>
+                                <div class="control06">
+                                    <label for="slide05" class="left"></label>
+                                    <label for="slide07" class="right"></label>
+                                </div>
+                                <div class="control07">
+                                    <label for="slide06" class="left"></label>
+                                    <label for="slide08" class="right"></label>
+                                </div>
+                                <div class="control08">
+                                    <label for="slide07" class="left"></label>
+                                    <label for="slide09" class="right"></label>
+                                </div>
+                                <div class="control09">
+                                    <label for="slide08" class="left"></label>
+                                    <label for="slide10" class="right"></label>
+                                </div>
+                                <div class="control10">
+                                    <label for="slide09" class="left"></label>
+                                    <label for="slide01" class="right"></label>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+                        
+            
+            <div class="conbox con2">
+                <div class="section">
+                    <input type="radio" name="slide1" id="slide11" checked>
+                    <input type="radio" name="slide1" id="slide12">
+                    <input type="radio" name="slide1" id="slide13">
+                    <input type="radio" name="slide1" id="slide14">
+                    <input type="radio" name="slide1" id="slide15">
+                    <input type="radio" name="slide1" id="slide16">
+                    <input type="radio" name="slide1" id="slide17">
+                    <input type="radio" name="slide1" id="slide18">
+                    <input type="radio" name="slide1" id="slide19">
+                    <input type="radio" name="slide1" id="slide20">
+    
+                    <div class="slidewrap">
+                        <ul class="slidelist">
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/weather2py_py.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/weather2py_py_part01.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/weather_py.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/xmldownload_py.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/xmldownload_py_part01.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/xmldownload_py_part02.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/xmldownload_py_part03.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/xmldownload_py_part04.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/xmldownload_py_part05.png">
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img src="../public/img/webcrawling/xmldownload_py_part06.png">
+                                </a>
+                            </li>
+                            <div class="slide-control">
+                                <div class="control11">
+                                    <label for="slide20" class="left"></label>
+                                    <label for="slide12" class="right"></label>
+                                </div>
+                                <div class="control12">
+                                    <label for="slide11" class="left"></label>
+                                    <label for="slide13" class="right"></label>
+                                </div>
+                                <div class="control13">
+                                    <label for="slide12" class="left"></label>
+                                    <label for="slide14" class="right"></label>
+                                </div>
+                                <div class="control14">
+                                    <label for="slide13" class="left"></label>
+                                    <label for="slide15" class="right"></label>
+                                </div>
+                                <div class="control15">
+                                    <label for="slide14" class="left"></label>
+                                    <label for="slide16" class="right"></label>
+                                </div>
+                                <div class="control16">
+                                    <label for="slide15" class="left"></label>
+                                    <label for="slide17" class="right"></label>
+                                </div>
+                                <div class="control17">
+                                    <label for="slide16" class="left"></label>
+                                    <label for="slide18" class="right"></label>
+                                </div>
+                                <div class="control18">
+                                    <label for="slide17" class="left"></label>
+                                    <label for="slide19" class="right"></label>
+                                </div>
+                                <div class="control19">
+                                    <label for="slide18" class="left"></label>
+                                    <label for="slide20" class="right"></label>
+                                </div>
+                                <div class="control20">
+                                    <label for="slide19" class="left"></label>
+                                    <label for="slide11" class="right"></label>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="conbox con3">
+                <div class="section">
+                    <input type="radio" name="slide2" id="slide21" checked>
+                    <input type="radio" name="slide2" id="slide22">
+                    <input type="radio" name="slide2" id="slide23">
+                    <div class="slidewrap">
+                        <ul class="slidelist">
+                            <li>
+                                <a>
+                                    <label for="slide23" class="left"></label>
+                                    <p class="text">웹크롤링을 통해 아이유이미지를 로컬에 다운받아서</p>
+                                    <img src="../public/img/MongoDBProj/webcralingIU.png">
+                                    <label for="slide22" class="right"></label>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <label for="slide21" class="left"></label>
+                                    <p class="text">사용자가 몽고디비아틀라스에 올리려는 파일명과 같으면</p>
+                                    <img src="../public/img/MongoDBProj/MonogoDBCompass.png">
+                                    <label for="slide23" class="right"></label>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <label for="slide22" class="left"></label>
+                                    <p class="text">RESTful API를 FastAPI uvicorn서버이용해 올려주는 로그인서버구축</p>
+                                    <img src="../public/img/MongoDBProj/Docker.png">
+                                    <label for="slide21" class="right"></label>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="conbox con4">
+                <input type="checkbox" id="category1">
+                <label for="category1" class="categorylabel">
+                    <h3><a href="#"><span style="font-size:1px;">오른쪽클릭</span></a></h3><em></em>
+                    <span class="arrowicon"></span>
+                </label>
+                <label id="testbox"><h3>문자열함수<span style="font-size:1px;color: #5f5f5f;"> 여기클릭</span></h3>
+                    <span class="arrowicon"></span>
+                    <input type="checkbox">
+                    <h2>subCategory</h2>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/raspmldlgycchang8753/222509963580">strcat으로 문자열수정해서 1초마다 다른메세지 출력 코드 구현 최종성공(C언어)</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/raspmldlgycchang8753/222517430555">strcmp1,2차원char포인터로구현_2차원배열표기법변환,리틀엔디언,클래스멤버변수로void포인터써서연결리스트수정,복사생성자</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://cafe.naver.com/mythread/639">문자열을정수로변환하는 atoi함수구현하기</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://cafe.naver.com/mythread/640">김성엽님글[문자열상수의잘못된사용에대하여]를 포인터로선언한 문자열변수는 포인터매개변수로 변수명으로보내질수없음을 알아본 포스팅</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://cafe.naver.com/mythread/643">문자열삽입함수구현</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://cafe.naver.com/mythread/950">strncpy_s strcpy_s memcpy차이</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/tipsware/222193682373">비트연산자 시프트연산자 [QUIZ]정수값을 문자로 출력하기 댓글참여</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://cafe.naver.com/mythread/1018">strcmp원리 구현 및 문자와 배열 비교후 배열내 같은 문자 반환 함수구현시도</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://cafe.naver.com/mythread/645">char**형 동적할당 메모리만의 주소 불연속성과 배열에서의 연속성 차이 메모리구조분석 코드</a></span>
+                    </label>
+                </label>
+
+                <label id="testbox"><h3>가위바위보게임 코드발전과정<span style="font-size:1px;color: #5f5f5f;"> 여기클릭</span></h3>
+                    <span class="arrowicon"></span>
+                    <input type="checkbox">
+                    <h2>subCategory</h2>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://cafe.naver.com/mythread/1012">strok을 strcat과배열로 구현하기</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/raspmldlgycchang8753/222595322307">C언어1학년전공필수들을당시코드 발전</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/raspmldlgycchang8753/222509963580">strcat으로 문자열수정해서 1초마다 다른메세지 출력 코드 구현 최종성공(C언어)</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/raspmldlgycchang8753/222517430555">strcmp1,2차원char포인터로구현_2차원배열표기법변환,리틀엔디언,클래스멤버변수로void포인터써서연결리스트수정,복사생성자</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/raspmldlgycchang8753/222505676542">[컴퓨터망과제1_0917]서버에서 5초동안 다른 버퍼 strcat이용해 만들어서 메세지 출력 및 클라이언트에게 5초동안 전송</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://drive.google.com/file/d/11yjsSKxdi2x2gst9x3ICz36Xl1zRPIST/view?usp=sharing" target="_blank"><img src="../public/img/blogger.png"></a>
+                            <p class="links-explain">위의 이미지 &#8593; &#8593; 클릭하여 pdf링크가기</p>2차원구조체포인터배열로 사용자별 말을 저장,삭제,검색 기능 구현완료한뒤 고사장에서 작성한 코드까지</span>
+
+                    </label>
+                </label>
+            </div>
+            <div class="conbox con5">
+                <a href="https://drive.google.com/file/d/11yjsSKxdi2x2gst9x3ICz36Xl1zRPIST/view?usp=sharing" target="_blank"><img src="../public/img/blogger.png"></a>
+                <p class="links-explain">위의 이미지 &#8593; &#8593; 클릭하여 pdf링크가기</p>
+                            
+            </div>
+                
+            <div class="conbox con6">
+                컨텐츠내용6
+            </div>
+            <div class="conbox con7">
+                컨텐츠내용7
+            </div>
+            <div class="conbox con8">
+                <p class="text">StartBootstrap을 활용한 clean blog 변형 새글작성 기능 추가와 MongodbCompass사용해서 몽고디비 서버에 블로그 데이터올려서 블로그 기능 구현하기</p>
+                <div><img src="../public/img/StartBootstrap/NodejsCleanBlog.png"></div>
+                <input type="checkbox" id="category1">
+                <label for="category1" class="categorylabel">
+                    <h3><a href="#"><span style="font-size:1px;"></span></a></h3><em></em>
+                    <span class="arrowicon"></span>
+                </label>
+                <label id="testbox"><h3>구현과정<span style="font-size:1px;color: #5f5f5f;"> 여기클릭</span></h3>
+                    <span class="arrowicon"></span>
+                    <input type="checkbox">
+                    <h2>subCategory</h2>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/raspmldlgycchang8753/222345374107">[Node js]부트스트랩을 활용한 clean blog 변형 새글작성 기능 추가 와 몽고디비 서버에 블로그 데이터 올려서 블로그 기능 구현하기</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/raspmldlgycchang8753/222346158815">[이어지는글Node js]몽고디비 데이터를 get메서드 이용해서 콘솔창에 가져온 결과 뿌려보기</a></span>
+                    </label>
+                    <br/>
+                    <label id="subtestbox">
+                        <span class="icon"></span>
+                        <span class="text"><a href="https://blog.naver.com/raspmldlgycchang8753/222346847108"><% 사용법(forEach문 과 res.render로 넘긴 몽고디비 데이터)</a></span>
+                    </label>
+                    <br/>
+                </label>
+            </div>
+        </div>
+
+
+        <div class="school_content">
+            <input type="radio" name="schoolmenu" id="tab10">
+            <label for="tab10">커피로 알아보는 내성격심리테스트</label>
+            <input type="radio" name="schoolmenu" id="tab11">
+            <label for="tab11">심리테스트소스코드&heroku서버루트주소</label>
+            <p class="exp">탭메뉴를 하나씩 눌러주세요</p>
+            <p class="showhidden">화살표를 클릭해주세요</p>
+            <div class="conbox con11">
+                <a href="https://intense-wildwood-72190.herokuapp.com/" target="_blank"><img src="../public/img/herokuproj/titleImage6.png" style="width:30px;height:30px;">심리테스트heroku서버배포보러가기</a>
+                <p/>
+                <a href="https://github.com/raspmldlgycchang/webfinalproj_privateVers.git" target="_blank">깃허브소스코드</a>
+                <p class="links-explain">위의 글자 &#8593; &#8593; 클릭하여 깃허브링크가기</p>
+				<h3>heroku create에러해결 NPM LOGLEVEL=ERROR해결법</h3>
+                <h4>방법</h4>
+                <span>app.js있는 경로에 Procfile추가</span>
+                <br/>
+                <span class="text">git bash쉘 npm install npm@7.17.0명령수행</span>							
+			</div>	
+            <div class="conbox con10">
+                <div class="section">
+                    <input type="radio" name="slide3" id="slide25" checked>
+                    <input type="radio" name="slide3" id="slide26">
+                    <input type="radio" name="slide3" id="slide27">
+                    <input type="radio" name="slide3" id="slide28">
+                    <input type="radio" name="slide3" id="slide29">
+                    <input type="radio" name="slide3" id="slide30">
+                    <input type="radio" name="slide3" id="slide31">
+                    <input type="radio" name="slide3" id="slide32">
+                
+                    <div class="slidewrap">
+                        <ul class="slidelist">
+                            <li>
+                                <a>
+                                    <label for="slide29" class="left"></label>
+                                    <p class="text">몽고디비 아틀라스를 이용해서 이미지를 npm의 multiparty모듈을 이용한 enctype="multipart/form-data"로 지정하여 올립니다. 그이외에 selection과 option의 html요소를 이용합니다</p>
+                                    <video src="../public/video/herokumonogodbupload.mp4" controls autoplay width="1170" height="500" poster="../public/img/herokuproj/mongodbdataupload.jpg"></video>
+                                    <label for="slide26" class="right"></label>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <label for="slide26" class="left"></label>
+                                    <p class="text">심리테스트인트로페이지</p>
+                                    <video src="../public/video/herokusimpuritestintro.mp4" controls autoplay width="1170" height="500"></video>
+                                    <label for="slide27" class="right"></label>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <label for="slide27" class="left"></label>
+                                    <p class="text">heroku서버루트주소</p>
+                                    <video src="../public/video/herokumainpage.mp4" controls autoplay width="1170" height="500"></video>
+                                    <label for="slide28" class="right"></label>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <label for="slide28" class="left"></label>
+                                    <p class="text">커피로 알아보는 나의성격</p>
+                                    <video controls autoplay width="1170" height="500" poster="썸네일할사진.jpg경로"></video>
+                                        <source src="../public/video/coffeesimpuritest.mp4" type='video/mp4; codecs="avc1, mp4a"'>
+                                        비디오 파일을 재생할 수 없습니다.
+                                    <label for="slide29" class="right"></label>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <label for="slide29" class="left"></label>
+                                    <p class="text">콜백함수최대2번으로 인한 heroku서버와 로컬호스트서버의 버그발생유무차이분석</p>
+                                    <video src="../public/video/bugAtHerokuNotLocal.mp4" controls autoplay width="1170" height="500"></video>
+                                    <label for="slide30" class="right"></label>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <label for="slide30" class="left"></label>
+                                    <p class="text">로컬호스트에서는 버그가 나지 않습니다</p>
+                                    <video src="../public/video/LocalhostServer.mp4" controls autoplay width="1170" height="500"></video>
+                                    <label for="slide31" class="right"></label>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <label for="slide31" class="left"></label>
+                                    <p class="text">사용된 js문법 & heroku 웹서버배포 deployment방법 소개 & express모듈 vscodeIDE로 heroku웹서버배포</p>
+                                    <img src="../public/img/herokuproj/expressherokusetting.png">
+                                    <label for="slide32" class="right"></label>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <label for="slide32" class="left"></label>
+                                    <p class="text">콜백함수버그이유설명</p>
+                                    <img src="../public/img/herokuproj/LocalhostNotAnyBug.png">							
+                                    <label for="slide26" class="right"></label>
+                                </a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+            <div class="conbox con11">
+                <a href="https://intense-wildwood-72190.herokuapp.com/" target="_blank"><p class="links-explain">심리테스트heroku서버배포</p></a>
+                <a href="https://github.com/raspmldlgycchang/webfinalproj_privateVers.git" target="_blank">깃허브소스코드</a>
+                <p class="links-explain">위의 이미지 &#8593; &#8593; 클릭하여 pdf링크가기</p>
+				<h3>heroku create에러해결 NPM LOGLEVEL=ERROR해결법</h3>
+                <h2>subCategory</h2>
+                <span>app.js있는 경로에 Procfile추가</span>
+                <br/>
+                <span class="text">git bash쉘 npm install npm@7.17.0명령수행</span>							
+			</div>		
+        </div>
+    </div>
+</body>
+</html>
